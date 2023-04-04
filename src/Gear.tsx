@@ -1,21 +1,16 @@
-import {
-  Circle,
-  Line,
-  Node,
-  NodeProps,
-} from "@motion-canvas/2d/lib/components";
+import {Circle, Line, Node, NodeProps} from '@motion-canvas/2d/lib/components';
 import {
   CanvasStyleSignal,
   canvasStyleSignal,
   initial,
   signal,
-} from "@motion-canvas/2d/lib/decorators";
-import { PossibleCanvasStyle } from "@motion-canvas/2d/lib/partials";
+} from '@motion-canvas/2d/lib/decorators';
+import {PossibleCanvasStyle} from '@motion-canvas/2d/lib/partials';
 import {
   createSignal,
   SignalValue,
   SimpleSignal,
-} from "@motion-canvas/core/lib/signals";
+} from '@motion-canvas/core/lib/signals';
 
 export interface StrutConfig {
   /**
@@ -111,49 +106,52 @@ export class Gear extends Node {
   @signal()
   public declare readonly struts: SimpleSignal<StrutConfig>;
 
-  @initial("#ffffff")
+  @initial('#ffffff')
   @canvasStyleSignal()
   public declare readonly color: CanvasStyleSignal<this>;
 
   private readonly magnitude: SimpleSignal<number, this> = createSignal(
-    () => (this.diameter() + this.teethThickness()) / 2
+    () => (this.diameter() + this.teethThickness()) / 2,
   );
 
   private readonly teethWidth: SimpleSignal<number, this> = createSignal(
-    () => (2 * Math.PI * this.magnitude()) / (this.teeth() * 2)
+    () => (2 * Math.PI * this.magnitude()) / (this.teeth() * 2),
   );
 
   private readonly teethRadianDiff: SimpleSignal<number, this> = createSignal(
-    () => this.teethWidth() / this.magnitude()
+    () => this.teethWidth() / this.magnitude(),
   );
 
   private readonly teethHeight: SimpleSignal<number, this> = createSignal(
     () =>
       ((this.diameter() + this.teethThickness()) / this.THICKNESS_RATIO) *
-      this.teethHeightFactor()
+      this.teethHeightFactor(),
   );
 
   private readonly teethShape: SimpleSignal<number, this> = createSignal(
-    () => this.teeth() * (Math.abs(this.teethSquareness()) + 2)
+    () => this.teeth() * (Math.abs(this.teethSquareness()) + 2),
   );
 
   private readonly teethThickness: SimpleSignal<number, this> = createSignal(
-    () => (this.diameter() * this.thickness()) / this.THICKNESS_RATIO
+    () => (this.diameter() * this.thickness()) / this.THICKNESS_RATIO,
   );
 
   private readonly teethCloseness: SimpleSignal<number, this> = createSignal(
-    () => Math.PI / (100 - this.teethClosenessFactor() * 10)
+    () => Math.PI / (100 - this.teethClosenessFactor() * 10),
   );
 
   private readonly concenctricCircleDiameter: SimpleSignal<number, this> =
     createSignal(() => {
-      return this.struts().concenctricDiameter ?? 0;
+      if (this.struts()) {
+        return this.struts().concenctricDiameter ?? 0;
+      }
+      return 0;
     });
 
   private readonly concentricCircleThickness: SimpleSignal<number, this> =
     createSignal(() => {
       // Only give a thickness if the diameter is defined
-      if (!this.struts().concenctricDiameter) return -1;
+      if (!this.struts() || !this.struts().concenctricDiameter) return -1;
       return (
         (this.struts().concenctricDiameter *
           (this.struts().concentricThicknessFactor ?? 1)) /
@@ -209,16 +207,16 @@ export class Gear extends Node {
                       polarToCartesian(this.magnitude(), st1),
                       polarToCartesian(
                         this.magnitude() + this.teethHeight(),
-                        et1
+                        et1,
                       ),
                       polarToCartesian(
                         this.magnitude() + this.teethHeight(),
-                        et2
+                        et2,
                       ),
                       polarToCartesian(this.magnitude(), st2),
                     ];
                   }}
-                />
+                />,
               );
             }
             return children;
@@ -256,7 +254,7 @@ export class Gear extends Node {
                 (this.concenctricCircleDiameter() -
                   this.concentricCircleThickness()) /
                   2,
-                theta
+                theta,
               );
 
               // Endpoint of a strut
@@ -269,7 +267,7 @@ export class Gear extends Node {
                       polarToCartesian(this.magnitude(), st1),
                       polarToCartesian(
                         this.magnitude(),
-                        st1 + this.teethRadianDiff() + this.teethCloseness()
+                        st1 + this.teethRadianDiff() + this.teethCloseness(),
                       ),
                     ];
 
@@ -283,13 +281,13 @@ export class Gear extends Node {
                     [x1, y1],
                     [x2, y2],
                   ]}
-                />
+                />,
               );
             }
             return strutLines;
           }}
         />
-      </>
+      </>,
     );
   }
 
@@ -308,7 +306,7 @@ export class Gear extends Node {
     yield* this.rotation(
       ((this.teethRadianDiff() * 180) / Math.PI) * (amt ?? 1) * 2 +
         this.rotation(),
-      duration
+      duration,
     );
   }
 }
@@ -322,7 +320,7 @@ export class Gear extends Node {
  */
 export const polarToCartesian = (
   r: number,
-  theta: number
+  theta: number,
 ): [number, number] => {
   return [r * Math.cos(theta), r * Math.sin(theta)];
 };
