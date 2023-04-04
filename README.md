@@ -36,6 +36,7 @@ export default defineConfig({
 ```
 
 ## Components
-|Name|Description|
-|----|-----------|
-|Gear|A spur gear with configurable size, teeth, struts, and a *single* concentric center|
+
+| Name | Description                                                                         |
+| ---- | ----------------------------------------------------------------------------------- |
+| Gear | A spur gear with configurable size, teeth, struts, and a _single_ concentric center |
