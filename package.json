@@ -1,7 +1,7 @@
 {
-  "name": "motion-canvas-component-library",
-  "version": "0.0.0",
-  "description": "",
+  "name": "@jtstrader/motion-canvas-components",
+  "version": "1.0.0",
+  "description": "A Motion Canvas components library.",
   "scripts": {
     "prepare": "husky install",
     "build:dev": "rollup -c rollup.config.mjs",
@@ -19,9 +19,10 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "keywords": [
-    "motion-canvas"
+    "motion-canvas",
+    "gear"
   ],
-  "author": "",
+  "author": "Jacob Strader",
   "homepage": "",
   "peerDependencies": {
     "@motion-canvas/2d": "^3.4.0",

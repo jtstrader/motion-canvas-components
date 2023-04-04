@@ -13,7 +13,7 @@ const config = [
     output: {
       file: 'lib/bundle.js',
       format: 'umd',
-      name: 'MyFirstMotionCanvasLibrary',
+      name: '@jtstrader/MotionCanvasComponents',
     },
     plugins: [externals(), typescript(), minify && terser()],
     external: [/^@motion-canvas\/core/, /^@motion-canvas\/2d/],
