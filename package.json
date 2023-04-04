@@ -1,6 +1,6 @@
 {
   "name": "@jtstrader/motion-canvas-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Motion Canvas components library.",
   "scripts": {
     "prepare": "husky install",

@@ -34,6 +34,13 @@ export interface StrutConfig {
   concentricThicknessFactor?: number;
 }
 
+const DEFAULT_STRUT_CFG: StrutConfig = {
+  struts: 0,
+  widthFactor: 1,
+  concenctricDiameter: 0,
+  concentricThicknessFactor: 1,
+};
+
 export interface GearProps extends NodeProps {
   /**
    * The diameter of the gear.
@@ -102,7 +109,7 @@ export class Gear extends Node {
   @signal()
   public declare readonly thickness: SimpleSignal<number>;
 
-  @initial(undefined)
+  @initial(DEFAULT_STRUT_CFG)
   @signal()
   public declare readonly struts: SimpleSignal<StrutConfig>;
 
@@ -238,7 +245,7 @@ export class Gear extends Node {
         {/* Struts */}
         <Node
           spawner={() => {
-            if (!this.struts()) return [];
+            if (!this.struts() || this.struts().struts <= 1) return [];
 
             const strutLines: Node[] = [];
             for (
